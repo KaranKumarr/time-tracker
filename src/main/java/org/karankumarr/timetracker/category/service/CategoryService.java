@@ -34,7 +34,7 @@ public class CategoryService {
 
     public CategoryResponse createCategory(CategoryRequest categoryRequest) {
 
-        if(categoryRequest.getName() == null){
+        if (categoryRequest.getName() == null) {
             throw new IllegalArgumentException("name is required");
         }
 
@@ -42,19 +42,19 @@ public class CategoryService {
 
         categoryEntity.setName(categoryRequest.getName());
 
-        if(categoryRequest.getDescription() != null){
+        if (categoryRequest.getDescription() != null) {
             categoryEntity.setDescription(categoryRequest.getDescription());
         }
 
-        if(categoryRequest.getGoalHours() != null){
+        if (categoryRequest.getGoalHours() != null) {
             categoryEntity.setGoalHours(categoryRequest.getGoalHours());
         }
 
         int userId = 2;
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with id "+userId));
+        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with id " + userId));
         categoryEntity.setUser(user);
 
-        Category categorySaved =  categoryRepository.save(categoryEntity);
+        Category categorySaved = categoryRepository.save(categoryEntity);
 
         return new CategoryResponse(
                 categorySaved.getId(),
@@ -63,6 +63,35 @@ public class CategoryService {
                 categorySaved.getGoalHours(),
                 categorySaved.getLoggedHours(),
                 categorySaved.getCreatedAt()
+        );
+    }
+
+    public CategoryResponse updateCategory(Integer id, CategoryRequest categoryRequest) {
+
+        Category categoryEntity = categoryRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Category not found with id " + id));
+
+        if (categoryRequest.getName() != null) {
+            categoryEntity.setName(categoryRequest.getName());
+        }
+        if (categoryRequest.getDescription() != null) {
+            categoryEntity.setDescription(categoryRequest.getDescription());
+        }
+        if (categoryRequest.getGoalHours() != null) {
+            categoryEntity.setGoalHours(categoryRequest.getGoalHours());
+        }
+        if (categoryRequest.getLoggedHours() != null) {
+            categoryEntity.setLoggedHours(categoryRequest.getLoggedHours());
+        }
+
+        Category updatedCategory = categoryRepository.save(categoryEntity);
+
+        return new CategoryResponse(
+                updatedCategory.getId(),
+                updatedCategory.getName(),
+                updatedCategory.getDescription(),
+                updatedCategory.getGoalHours(),
+                updatedCategory.getLoggedHours(),
+                updatedCategory.getCreatedAt()
         );
     }
 
