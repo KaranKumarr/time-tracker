@@ -2,11 +2,13 @@ package org.karankumarr.timetracker.category.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import org.karankumarr.timetracker.user.entity.User;
 
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @Entity
 public class Category {
 
@@ -15,9 +17,9 @@ public class Category {
     private Long id;
 
     private String name;
-    private String description;
-    private int goalHours;
-    private int loggedHours = 0;
+    private String description = "";
+    private Integer goalHours = 0;
+    private Integer loggedHours = 0;
 
     private LocalDateTime createdAt;
 
