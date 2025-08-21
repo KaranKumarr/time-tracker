@@ -12,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @Service
 public class TimeLogService {
@@ -41,28 +43,28 @@ public class TimeLogService {
                 ));
     }
 
-    public TimeLogResponse createTimeLog(TimeLogRequest timeLog) {
+    public TimeLogResponse createTimeLog(TimeLogRequest timeLogRequest) {
 
-        if(timeLog.getStartTime() == null || timeLog.getEndTime() == null) {
+        if(timeLogRequest.getStartTime() == null || timeLogRequest.getEndTime() == null) {
             throw new IllegalArgumentException("Start and end time cannot be null");
         }
-        if(timeLog.getEndTime().isBefore(timeLog.getStartTime())) {
+        if(timeLogRequest.getEndTime().isBefore(timeLogRequest.getStartTime())) {
             throw new IllegalArgumentException("End time cannot be before start time");
         }
 
         int userId = 2;
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Skill not found with id "+userId));
+        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with id "+userId));
 
         TimeLog timeLogEntity = new TimeLog();
-        if(timeLog.getSkillId() != null) {
-            Skill skill = skillRepository.findById(Math.toIntExact(timeLog.getSkillId())).orElseThrow(() -> new IllegalArgumentException("Skill not found with id "+timeLog.getSkillId()));
+        if(timeLogRequest.getSkillId() != null) {
+            Skill skill = skillRepository.findById(Math.toIntExact(timeLogRequest.getSkillId())).orElseThrow(() -> new IllegalArgumentException("Skill not found with id "+timeLogRequest.getSkillId()));
             timeLogEntity.setSkill(skill);
         }
-        if(timeLog.getDescription() != null) {
-            timeLogEntity.setDescription(timeLog.getDescription());
+        if(timeLogRequest.getDescription() != null) {
+            timeLogEntity.setDescription(timeLogRequest.getDescription());
         }
-        timeLogEntity.setStartTime(timeLog.getStartTime());
-        timeLogEntity.setEndTime(timeLog.getEndTime());
+        timeLogEntity.setStartTime(timeLogRequest.getStartTime());
+        timeLogEntity.setEndTime(timeLogRequest.getEndTime());
         timeLogEntity.setUser(user);
 
         TimeLog timeLogSaved = this.timeLogRepository.save(timeLogEntity);
@@ -75,8 +77,39 @@ public class TimeLogService {
                 timeLogSaved.getDurationMinutes(),
                 timeLogSaved.getDescription()
         );
-
     }
 
+    public TimeLogResponse updateTimeLog(Integer id, TimeLogRequest timeLogRequest) {
+
+        TimeLog timeLogEntity =  timeLogRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Time log not found with id "+id));
+
+        if(timeLogRequest.getDescription() != null) {
+            timeLogEntity.setDescription(timeLogRequest.getDescription());
+        }
+        if(timeLogRequest.getSkillId() != null) {
+            Skill updatedSkill = skillRepository.findById(Math.toIntExact(timeLogRequest.getSkillId())).orElseThrow(() -> new IllegalArgumentException("Skill not found with id "+timeLogRequest.getSkillId()));
+            timeLogEntity.setSkill(updatedSkill);
+        }
+        if(timeLogRequest.getStartTime() != null) {
+            timeLogEntity.setStartTime(timeLogRequest.getStartTime());
+        }
+        if(timeLogRequest.getEndTime() != null) {
+            timeLogEntity.setEndTime(timeLogRequest.getEndTime());
+        }
+        if(timeLogEntity.getEndTime().isBefore(timeLogEntity.getStartTime())) {
+            throw new IllegalArgumentException("End time cannot be before start time");
+        }
+
+        TimeLog timeLogSaved = this.timeLogRepository.save(timeLogEntity);
+
+        return new TimeLogResponse(
+                timeLogSaved.getId(),
+                timeLogSaved.getSkill(),
+                timeLogSaved.getStartTime(),
+                timeLogSaved.getEndTime(),
+                timeLogSaved.getDurationMinutes(),
+                timeLogSaved.getDescription()
+        );
+    }
 
 }
