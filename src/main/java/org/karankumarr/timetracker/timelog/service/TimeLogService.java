@@ -112,4 +112,9 @@ public class TimeLogService {
         );
     }
 
+    public void deleteTimeLog(Integer id) {
+        TimeLog timeLog =  this.timeLogRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Time log not found with id "+id));
+        this.timeLogRepository.delete(timeLog);
+    }
+
 }

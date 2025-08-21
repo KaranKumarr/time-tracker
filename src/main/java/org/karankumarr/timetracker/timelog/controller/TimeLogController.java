@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Time;
 import java.util.List;
 
 @RestController
@@ -44,6 +43,12 @@ public class TimeLogController {
     public ResponseEntity<ApiResponse<TimeLogResponse>> updateTimeLog(@PathVariable Integer id,
                                                                       @RequestBody TimeLogRequest timeLogRequest) {
         return ResponseEntity.ok(new ApiResponse<>(200, "Updated.", timeLogService.updateTimeLog(id, timeLogRequest)));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<TimeLogResponse>> deleteTimeLog(@PathVariable Integer id) {
+        timeLogService.deleteTimeLog(id);
+        return ResponseEntity.ok(new ApiResponse<>(204, "Deleted."));
     }
 
 }

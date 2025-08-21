@@ -6,11 +6,15 @@ import lombok.Getter;
 public class ApiResponse<T> {
     private final int status;
     private final String message;
-    private final T data;
 
+    private final T data; // nullable (e.g -> delete route)
     private final Integer page;   // nullable
     private final Integer size;  // nullable
     private final Long total;     // nullable
+
+    public ApiResponse(int status, String message) {
+        this(status, message, null, null, null, null);
+    }
 
     public ApiResponse(int status, String message, T data) {
         this(status, message, data, null, null, null);
@@ -24,4 +28,5 @@ public class ApiResponse<T> {
         this.size = size;
         this.total = total;
     }
+
 }
