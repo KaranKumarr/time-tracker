@@ -5,13 +5,13 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.security.Key;
+import javax.crypto.SecretKey;
 import java.util.Date;
 
 @Service
 public class JwtService {
 
-    private final Key key;
+    private final SecretKey key;
 
     public JwtService(@Value("${jwt.secret}") String secret) {
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
@@ -27,12 +27,14 @@ public class JwtService {
     }
 
     public String extractEmail(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(key) // same key used to create the token
+        return Jwts.parser()
+                .verifyWith(key)   // new API instead of setSigningKey()
                 .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject(); // this is where we stored the email
+                .parseSignedClaims(token)
+                .getPayload()
+                .getSubject();
+
     }
+
 
 }

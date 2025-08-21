@@ -1,6 +1,6 @@
 package org.karankumarr.timetracker.user.repository;
 
-import org.karankumarr.teerly.user.entity.User;
+import org.karankumarr.timetracker.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,8 +1,8 @@
 package org.karankumarr.timetracker.auth.controller;
 
-import org.karankumarr.teerly.auth.service.AuthService;
-import org.karankumarr.teerly.user.dto.LoginRequest;
-import org.karankumarr.teerly.user.dto.RegisterRequest;
+import org.karankumarr.timetracker.auth.service.AuthService;
+import org.karankumarr.timetracker.user.dto.LoginRequest;
+import org.karankumarr.timetracker.user.dto.RegisterRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,8 +1,8 @@
 package org.karankumarr.timetracker.user.controller;
 
-import org.karankumarr.teerly.user.dto.UserResponse;
-import org.karankumarr.teerly.user.entity.User;
-import org.karankumarr.teerly.user.service.UserService;
+import org.karankumarr.timetracker.user.dto.UserResponse;
+import org.karankumarr.timetracker.user.entity.User;
+import org.karankumarr.timetracker.user.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

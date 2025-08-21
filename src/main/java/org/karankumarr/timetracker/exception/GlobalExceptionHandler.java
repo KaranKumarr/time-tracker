@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponse(400, ex.getMessage()));
     }
 
-    // Handle not found
+    // Handle entity not found
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleNotFound(EntityNotFoundException ex) {
         return ResponseEntity
@@ -25,14 +25,19 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponse(404, ex.getMessage()));
     }
 
-    // Fallback
+    // Fallback for any unhandled exceptions
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneral(Exception ex) {
+        // Print stacktrace for debugging (can be replaced with logger)
+        ex.printStackTrace();
+
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new ErrorResponse(500, "Something went wrong"));
+                .body(new ErrorResponse(500, "Unexpected error: " + ex.getMessage()));
     }
 
+    // ✅ Common error response format
+    // @TODO fix this later
     static class ErrorResponse {
         private final int status;
         private final String message;

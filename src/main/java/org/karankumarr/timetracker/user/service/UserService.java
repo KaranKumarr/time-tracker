@@ -1,8 +1,8 @@
 package org.karankumarr.timetracker.user.service;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.karankumarr.teerly.user.entity.User;
-import org.karankumarr.teerly.user.repository.UserRepository;
+import org.karankumarr.timetracker.user.entity.User;
+import org.karankumarr.timetracker.user.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
