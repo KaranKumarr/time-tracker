@@ -1,4 +1,4 @@
-package org.karankumarr.timetracker.skill.entity;
+package org.karankumarr.timetracker.category.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Entity
-public class Skill {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

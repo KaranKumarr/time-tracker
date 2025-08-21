@@ -1,7 +1,7 @@
 package org.karankumarr.timetracker.timelog.service;
 
-import org.karankumarr.timetracker.skill.entity.Skill;
-import org.karankumarr.timetracker.skill.repository.SkillRepository;
+import org.karankumarr.timetracker.category.entity.Category;
+import org.karankumarr.timetracker.category.repository.CategoryRepository;
 import org.karankumarr.timetracker.timelog.dto.TimeLogRequest;
 import org.karankumarr.timetracker.timelog.dto.TimeLogResponse;
 import org.karankumarr.timetracker.timelog.entity.TimeLog;
@@ -12,20 +12,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 
 @Service
 public class TimeLogService {
 
 
     private final TimeLogRepository timeLogRepository;
-    private final SkillRepository skillRepository;
+    private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
 
-    public TimeLogService(TimeLogRepository timeLogRepository, SkillRepository skillRepository, UserRepository userRepository) {
+    public TimeLogService(TimeLogRepository timeLogRepository, CategoryRepository categoryRepository, UserRepository userRepository) {
         this.timeLogRepository = timeLogRepository;
-        this.skillRepository = skillRepository;
+        this.categoryRepository = categoryRepository;
         this.userRepository = userRepository;
     }
 
@@ -35,7 +33,7 @@ public class TimeLogService {
         return this.timeLogRepository.findAll(pageable)
                 .map(tl -> new TimeLogResponse(
                         tl.getId(),
-                        tl.getSkill(),
+                        tl.getCategory(),
                         tl.getStartTime(),
                         tl.getEndTime(),
                         tl.getDurationMinutes(),
@@ -56,9 +54,9 @@ public class TimeLogService {
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with id "+userId));
 
         TimeLog timeLogEntity = new TimeLog();
-        if(timeLogRequest.getSkillId() != null) {
-            Skill skill = skillRepository.findById(Math.toIntExact(timeLogRequest.getSkillId())).orElseThrow(() -> new IllegalArgumentException("Skill not found with id "+timeLogRequest.getSkillId()));
-            timeLogEntity.setSkill(skill);
+        if(timeLogRequest.getCategoryId() != null) {
+            Category category = categoryRepository.findById(Math.toIntExact(timeLogRequest.getCategoryId())).orElseThrow(() -> new IllegalArgumentException("Category not found with id "+timeLogRequest.getCategoryId()));
+            timeLogEntity.setCategory(category);
         }
         if(timeLogRequest.getDescription() != null) {
             timeLogEntity.setDescription(timeLogRequest.getDescription());
@@ -71,7 +69,7 @@ public class TimeLogService {
 
         return new TimeLogResponse(
                 timeLogSaved.getId(),
-                timeLogSaved.getSkill(),
+                timeLogSaved.getCategory(),
                 timeLogSaved.getStartTime(),
                 timeLogSaved.getEndTime(),
                 timeLogSaved.getDurationMinutes(),
@@ -86,9 +84,9 @@ public class TimeLogService {
         if(timeLogRequest.getDescription() != null) {
             timeLogEntity.setDescription(timeLogRequest.getDescription());
         }
-        if(timeLogRequest.getSkillId() != null) {
-            Skill updatedSkill = skillRepository.findById(Math.toIntExact(timeLogRequest.getSkillId())).orElseThrow(() -> new IllegalArgumentException("Skill not found with id "+timeLogRequest.getSkillId()));
-            timeLogEntity.setSkill(updatedSkill);
+        if(timeLogRequest.getCategoryId() != null) {
+            Category updatedCategory = categoryRepository.findById(Math.toIntExact(timeLogRequest.getCategoryId())).orElseThrow(() -> new IllegalArgumentException("Category not found with id "+timeLogRequest.getCategoryId()));
+            timeLogEntity.setCategory(updatedCategory);
         }
         if(timeLogRequest.getStartTime() != null) {
             timeLogEntity.setStartTime(timeLogRequest.getStartTime());
@@ -104,7 +102,7 @@ public class TimeLogService {
 
         return new TimeLogResponse(
                 timeLogSaved.getId(),
-                timeLogSaved.getSkill(),
+                timeLogSaved.getCategory(),
                 timeLogSaved.getStartTime(),
                 timeLogSaved.getEndTime(),
                 timeLogSaved.getDurationMinutes(),

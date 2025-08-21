@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Getter
 public class TimeLogRequest {
-    private Long skillId;
+    private Long categoryId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private String description;

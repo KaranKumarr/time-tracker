@@ -3,7 +3,7 @@ package org.karankumarr.timetracker.timelog.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.karankumarr.timetracker.skill.entity.Skill;
+import org.karankumarr.timetracker.category.entity.Category;
 import org.karankumarr.timetracker.user.entity.User;
 
 import java.time.LocalDateTime;
@@ -18,8 +18,8 @@ public class TimeLog {
     private Long id;
 
     @ManyToOne(optional = true)
-    @JoinColumn(name = "skill_id", nullable = true)
-    private Skill skill;
+    @JoinColumn(name = "category_id", nullable = true)
+    private Category category;
 
     private LocalDateTime startTime;  // e.g., 2025-08-20 18:30
     private LocalDateTime endTime;    // e.g., 2025-08-20 20:00
