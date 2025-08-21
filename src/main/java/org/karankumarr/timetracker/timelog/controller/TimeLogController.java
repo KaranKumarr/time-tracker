@@ -5,6 +5,7 @@ import org.karankumarr.timetracker.timelog.dto.TimeLogRequest;
 import org.karankumarr.timetracker.timelog.dto.TimeLogResponse;
 import org.karankumarr.timetracker.timelog.service.TimeLogService;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,23 +21,22 @@ public class TimeLogController {
     }
 
     @GetMapping
-    public  ApiResponse<List<TimeLogResponse>> getTimeLogs(@RequestParam(defaultValue = "0") int page,
-                                             @RequestParam(defaultValue = "10") int size) {
+    public ResponseEntity<ApiResponse<List<TimeLogResponse>>> getTimeLogs(@RequestParam(defaultValue = "0") int page,
+                                      @RequestParam(defaultValue = "10") int size) {
         Page<TimeLogResponse> result = timeLogService.getTimeLogs(page, size);
-
-        return new ApiResponse<>(
+        return ResponseEntity.ok(new ApiResponse<>(
                 200,
-                "Fetched successfully",
+                "Fetched successfully.",
                 result.getContent(),
                 result.getNumber(),
                 result.getSize(),
                 result.getTotalElements()
-        );
+        ));
     }
 
     @PostMapping
-    public ApiResponse<TimeLogResponse> createTimeLog(@RequestBody TimeLogRequest timeLogRequest) {
-        return new ApiResponse<>(200, "Created.", timeLogService.createTimeLog(timeLogRequest));
+    public ResponseEntity<ApiResponse<TimeLogResponse>> createTimeLog(@RequestBody TimeLogRequest timeLogRequest) {
+        return ResponseEntity.ok(new ApiResponse<>(200, "Created.", timeLogService.createTimeLog(timeLogRequest)));
     }
 
 }
