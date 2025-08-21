@@ -4,6 +4,7 @@ import org.karankumarr.timetracker.category.dto.CategoryRequest;
 import org.karankumarr.timetracker.category.dto.CategoryResponse;
 import org.karankumarr.timetracker.category.entity.Category;
 import org.karankumarr.timetracker.category.repository.CategoryRepository;
+import org.karankumarr.timetracker.timelog.entity.TimeLog;
 import org.karankumarr.timetracker.user.entity.User;
 import org.karankumarr.timetracker.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -95,4 +96,8 @@ public class CategoryService {
         );
     }
 
+    public void deleteCategory(Integer id) {
+        Category category =  this.categoryRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Category not found with id "+id));
+        this.categoryRepository.delete(category);
+    }
 }

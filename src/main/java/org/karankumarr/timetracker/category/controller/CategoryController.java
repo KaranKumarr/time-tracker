@@ -41,4 +41,10 @@ public class CategoryController {
         return ResponseEntity.ok(new ApiResponse<>(200, "Updated.", this.categoryService.updateCategory(id, categoryRequest)));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<CategoryResponse>> deleteCategory(@PathVariable Integer id) {
+        categoryService.deleteCategory(id);
+        return ResponseEntity.ok(new ApiResponse<>(204, "Deleted."));
+    }
+
 }
