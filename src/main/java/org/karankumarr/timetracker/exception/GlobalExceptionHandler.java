@@ -3,6 +3,7 @@ package org.karankumarr.timetracker.exception;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -36,6 +37,13 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponse(500, "Unexpected error: " + ex.getMessage()));
     }
 
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidJson(HttpMessageNotReadableException ex) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse(400, "Malformed request: " + ex.getMostSpecificCause().getMessage()));
+    }
+
     // ✅ Common error response format
     // @TODO fix this later
     static class ErrorResponse {
@@ -50,4 +58,5 @@ public class GlobalExceptionHandler {
         public int getStatus() { return status; }
         public String getMessage() { return message; }
     }
+
 }
