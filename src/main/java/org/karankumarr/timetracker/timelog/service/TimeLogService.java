@@ -43,8 +43,8 @@ public class TimeLogService {
 
     public TimeLogResponse createTimeLog(TimeLogRequest timeLogRequest) {
 
-        if(timeLogRequest.getStartTime() == null || timeLogRequest.getEndTime() == null) {
-            throw new IllegalArgumentException("Start and end time cannot be null");
+        if(timeLogRequest.getStartTime() == null) {
+            throw new IllegalArgumentException("Start time cannot be null");
         }
         if(timeLogRequest.getEndTime().isBefore(timeLogRequest.getStartTime())) {
             throw new IllegalArgumentException("End time cannot be before start time");

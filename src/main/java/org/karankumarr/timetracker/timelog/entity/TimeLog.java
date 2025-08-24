@@ -22,9 +22,9 @@ public class TimeLog {
     private Category category;
 
     private LocalDateTime startTime;  // e.g., 2025-08-20 18:30
-    private LocalDateTime endTime;    // e.g., 2025-08-20 20:00
+    private LocalDateTime endTime = null;    // e.g., 2025-08-20 20:00
 
-    private long durationMinutes;     // derived field for convenience
+    private long durationMinutes = 0;     // derived field for convenience
 
     private String description = "";
 
