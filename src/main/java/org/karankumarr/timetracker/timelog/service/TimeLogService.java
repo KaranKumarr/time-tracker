@@ -29,7 +29,7 @@ public class TimeLogService {
     }
 
     public Page<TimeLogResponse> getTimeLogs(int page, int size) {
-        PageRequest pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "startTime"));
+        PageRequest pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("startTime"), Sort.Order.asc("durationMinutes")));
 
         return this.timeLogRepository.findAll(pageable)
                 .map(tl -> new TimeLogResponse(
