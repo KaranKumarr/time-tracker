@@ -10,6 +10,7 @@ import org.karankumarr.timetracker.user.entity.User;
 import org.karankumarr.timetracker.user.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
@@ -28,7 +29,7 @@ public class TimeLogService {
     }
 
     public Page<TimeLogResponse> getTimeLogs(int page, int size) {
-        PageRequest pageable = PageRequest.of(page, size);
+        PageRequest pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "startTime"));
 
         return this.timeLogRepository.findAll(pageable)
                 .map(tl -> new TimeLogResponse(
