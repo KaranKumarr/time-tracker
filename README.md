@@ -33,12 +33,12 @@ Built with **Java**, **Spring Boot**, **PostgreSQL**, and **Docker**, this backe
 
 ### Prerequisites
 
-- Java+
+- Java
 - Docker & Docker Compose (or PostgreSQL installed locally)
 - Maven
 
 ### Clone the repository
 
 ```bash
-git clone https://github.com/your-username/time-tracker-backend.git
+git clone https://github.com/karankumarr/time-tracker-backend.git
 cd time-tracker-backend
