@@ -10,7 +10,7 @@ public class CategoryRequest {
     private String name;
     private String description;
     private Integer goalHours;
-    private final Integer loggedHours = 0;
+    private final Integer loggedMinutes = 0;
     private final GoalStatus status = GoalStatus.ACTIVE;
     public LocalDateTime deadline;
 }

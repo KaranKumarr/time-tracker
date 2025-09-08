@@ -20,18 +20,8 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
         this.userRepository = userRepository;
     }
-
     public List<CategoryResponse> getCategories() {
-        return categoryRepository.findAll().stream().map((cat -> new CategoryResponse(
-                cat.getId(),
-                cat.getName(),
-                cat.getDescription(),
-                cat.getGoalHours(),
-                cat.getLoggedHours(),
-                cat.getCreatedAt(),
-                cat.getDeadline(),
-                cat.getStatus()
-        ))).toList();
+        return categoryRepository.findAllWithLoggedMinutes();
     }
 
     public CategoryResponse createCategory(CategoryRequest categoryRequest) {
@@ -73,7 +63,7 @@ public class CategoryService {
                 categorySaved.getName(),
                 categorySaved.getDescription(),
                 categorySaved.getGoalHours(),
-                categorySaved.getLoggedHours(),
+                categorySaved.getLoggedMinutes(),
                 categorySaved.getCreatedAt(),
                 categorySaved.getDeadline(),
                 categorySaved.getStatus()
@@ -93,8 +83,8 @@ public class CategoryService {
         if (categoryRequest.getGoalHours() != null) {
             categoryEntity.setGoalHours(categoryRequest.getGoalHours());
         }
-        if (categoryRequest.getLoggedHours() != null) {
-            categoryEntity.setLoggedHours(categoryRequest.getLoggedHours());
+        if (categoryRequest.getLoggedMinutes() != null) {
+            categoryEntity.setLoggedMinutes(categoryRequest.getLoggedMinutes());
         }
         if(categoryRequest.getDeadline() != null) {
             categoryEntity.setDeadline(categoryRequest.getDeadline());
@@ -110,7 +100,7 @@ public class CategoryService {
                 updatedCategory.getName(),
                 updatedCategory.getDescription(),
                 updatedCategory.getGoalHours(),
-                updatedCategory.getLoggedHours(),
+                updatedCategory.getLoggedMinutes(),
                 updatedCategory.getCreatedAt(),
                 updatedCategory.getDeadline(),
                 updatedCategory.getStatus()
