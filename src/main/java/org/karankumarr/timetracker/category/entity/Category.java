@@ -31,4 +31,8 @@ public class Category {
     public void onCreate() {
         this.createdAt = LocalDateTime.now();
     }
+
+    public LocalDateTime deadline;
+
+    public GoalStatus status;
 }

@@ -1,6 +1,9 @@
 package org.karankumarr.timetracker.category.dto;
 
 import lombok.Getter;
+import org.karankumarr.timetracker.category.entity.GoalStatus;
+
+import java.time.LocalDateTime;
 
 @Getter
 public class CategoryRequest {
@@ -8,4 +11,6 @@ public class CategoryRequest {
     private String description;
     private Integer goalHours;
     private final Integer loggedHours = 0;
+    private GoalStatus status;
+    public LocalDateTime deadline;
 }

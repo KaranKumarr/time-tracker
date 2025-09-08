@@ -44,22 +44,22 @@ public class TimeLogService {
 
     public TimeLogResponse createTimeLog(TimeLogRequest timeLogRequest) {
 
-        if(timeLogRequest.getStartTime() == null) {
+        if (timeLogRequest.getStartTime() == null) {
             throw new IllegalArgumentException("Start time cannot be null");
         }
-        if(timeLogRequest.getEndTime().isBefore(timeLogRequest.getStartTime())) {
+        if (timeLogRequest.getEndTime() != null && timeLogRequest.getEndTime().isBefore(timeLogRequest.getStartTime())) {
             throw new IllegalArgumentException("End time cannot be before start time");
         }
 
         int userId = 2;
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with id "+userId));
+        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with id " + userId));
 
         TimeLog timeLogEntity = new TimeLog();
-        if(timeLogRequest.getCategoryId() != null) {
-            Category category = categoryRepository.findById(Math.toIntExact(timeLogRequest.getCategoryId())).orElseThrow(() -> new IllegalArgumentException("Category not found with id "+timeLogRequest.getCategoryId()));
+        if (timeLogRequest.getCategoryId() != null) {
+            Category category = categoryRepository.findById(Math.toIntExact(timeLogRequest.getCategoryId())).orElseThrow(() -> new IllegalArgumentException("Category not found with id " + timeLogRequest.getCategoryId()));
             timeLogEntity.setCategory(category);
         }
-        if(timeLogRequest.getDescription() != null) {
+        if (timeLogRequest.getDescription() != null) {
             timeLogEntity.setDescription(timeLogRequest.getDescription());
         }
         timeLogEntity.setStartTime(timeLogRequest.getStartTime());
@@ -80,22 +80,21 @@ public class TimeLogService {
 
     public TimeLogResponse updateTimeLog(Integer id, TimeLogRequest timeLogRequest) {
 
-        TimeLog timeLogEntity =  timeLogRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Time log not found with id "+id));
-
-        if(timeLogRequest.getDescription() != null) {
+        TimeLog timeLogEntity = timeLogRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Time log not found with id " + id));
+        if (timeLogRequest.getDescription() != null) {
             timeLogEntity.setDescription(timeLogRequest.getDescription());
         }
-        if(timeLogRequest.getCategoryId() != null) {
-            Category updatedCategory = categoryRepository.findById(Math.toIntExact(timeLogRequest.getCategoryId())).orElseThrow(() -> new IllegalArgumentException("Category not found with id "+timeLogRequest.getCategoryId()));
+        if (timeLogRequest.getCategoryId() != null) {
+            Category updatedCategory = categoryRepository.findById(Math.toIntExact(timeLogRequest.getCategoryId())).orElseThrow(() -> new IllegalArgumentException("Category not found with id " + timeLogRequest.getCategoryId()));
             timeLogEntity.setCategory(updatedCategory);
         }
-        if(timeLogRequest.getStartTime() != null) {
+        if (timeLogRequest.getStartTime() != null) {
             timeLogEntity.setStartTime(timeLogRequest.getStartTime());
         }
-        if(timeLogRequest.getEndTime() != null) {
+        if (timeLogRequest.getEndTime() != null) {
             timeLogEntity.setEndTime(timeLogRequest.getEndTime());
         }
-        if(timeLogEntity.getEndTime().isBefore(timeLogEntity.getStartTime())) {
+        if (timeLogRequest.getEndTime() != null && timeLogEntity.getEndTime().isBefore(timeLogEntity.getStartTime())) {
             throw new IllegalArgumentException("End time cannot be before start time");
         }
 
@@ -112,7 +111,7 @@ public class TimeLogService {
     }
 
     public void deleteTimeLog(Integer id) {
-        TimeLog timeLog =  this.timeLogRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Time log not found with id "+id));
+        TimeLog timeLog = this.timeLogRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Time log not found with id " + id));
         this.timeLogRepository.delete(timeLog);
     }
 
