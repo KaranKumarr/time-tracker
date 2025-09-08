@@ -11,6 +11,6 @@ public class CategoryRequest {
     private String description;
     private Integer goalHours;
     private final Integer loggedHours = 0;
-    private GoalStatus status;
+    private final GoalStatus status = GoalStatus.ACTIVE;
     public LocalDateTime deadline;
 }

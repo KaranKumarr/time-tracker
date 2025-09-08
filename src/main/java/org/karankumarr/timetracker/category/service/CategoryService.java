@@ -39,10 +39,14 @@ public class CategoryService {
         if (categoryRequest.getName() == null) {
             throw new IllegalArgumentException("name is required");
         }
+        if(categoryRequest.getStatus()==null) {
+            throw new IllegalArgumentException("status is required");
+        }
 
         Category categoryEntity = new Category();
 
         categoryEntity.setName(categoryRequest.getName());
+        categoryEntity.setStatus(categoryRequest.getStatus());
 
         if (categoryRequest.getDescription() != null) {
             categoryEntity.setDescription(categoryRequest.getDescription());
@@ -56,9 +60,7 @@ public class CategoryService {
             categoryEntity.setDeadline(categoryRequest.getDeadline());
         }
 
-        if (categoryRequest.getStatus() != null) {
-            categoryEntity.setStatus(categoryRequest.getStatus());
-        }
+
 
         int userId = 2;
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with id " + userId));
