@@ -4,7 +4,6 @@ import org.karankumarr.timetracker.category.dto.CategoryRequest;
 import org.karankumarr.timetracker.category.dto.CategoryResponse;
 import org.karankumarr.timetracker.category.entity.Category;
 import org.karankumarr.timetracker.category.repository.CategoryRepository;
-import org.karankumarr.timetracker.timelog.entity.TimeLog;
 import org.karankumarr.timetracker.user.entity.User;
 import org.karankumarr.timetracker.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -29,7 +28,9 @@ public class CategoryService {
                 cat.getDescription(),
                 cat.getGoalHours(),
                 cat.getLoggedHours(),
-                cat.getCreatedAt()
+                cat.getCreatedAt(),
+                cat.getDeadline(),
+                cat.getStatus()
         ))).toList();
     }
 
@@ -51,6 +52,14 @@ public class CategoryService {
             categoryEntity.setGoalHours(categoryRequest.getGoalHours());
         }
 
+        if (categoryRequest.getDeadline() != null) {
+            categoryEntity.setDeadline(categoryRequest.getDeadline());
+        }
+
+        if (categoryRequest.getStatus() != null) {
+            categoryEntity.setStatus(categoryRequest.getStatus());
+        }
+
         int userId = 2;
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with id " + userId));
         categoryEntity.setUser(user);
@@ -63,7 +72,9 @@ public class CategoryService {
                 categorySaved.getDescription(),
                 categorySaved.getGoalHours(),
                 categorySaved.getLoggedHours(),
-                categorySaved.getCreatedAt()
+                categorySaved.getCreatedAt(),
+                categorySaved.getDeadline(),
+                categorySaved.getStatus()
         );
     }
 
@@ -83,6 +94,12 @@ public class CategoryService {
         if (categoryRequest.getLoggedHours() != null) {
             categoryEntity.setLoggedHours(categoryRequest.getLoggedHours());
         }
+        if(categoryRequest.getDeadline() != null) {
+            categoryEntity.setDeadline(categoryRequest.getDeadline());
+        }
+        if(categoryRequest.getStatus() != null) {
+            categoryEntity.setStatus(categoryRequest.getStatus());
+        }
 
         Category updatedCategory = categoryRepository.save(categoryEntity);
 
@@ -92,12 +109,14 @@ public class CategoryService {
                 updatedCategory.getDescription(),
                 updatedCategory.getGoalHours(),
                 updatedCategory.getLoggedHours(),
-                updatedCategory.getCreatedAt()
+                updatedCategory.getCreatedAt(),
+                updatedCategory.getDeadline(),
+                updatedCategory.getStatus()
         );
     }
 
     public void deleteCategory(Integer id) {
-        Category category =  this.categoryRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Category not found with id "+id));
+        Category category = this.categoryRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Category not found with id " + id));
         this.categoryRepository.delete(category);
     }
 }
