@@ -20,6 +20,7 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
         this.userRepository = userRepository;
     }
+
     public List<CategoryResponse> getCategories() {
         return categoryRepository.findAllWithLoggedMinutes();
     }
@@ -29,7 +30,7 @@ public class CategoryService {
         if (categoryRequest.getName() == null) {
             throw new IllegalArgumentException("name is required");
         }
-        if(categoryRequest.getStatus()==null) {
+        if (categoryRequest.getStatus() == null) {
             throw new IllegalArgumentException("status is required");
         }
 
@@ -49,7 +50,6 @@ public class CategoryService {
         if (categoryRequest.getDeadline() != null) {
             categoryEntity.setDeadline(categoryRequest.getDeadline());
         }
-
 
 
         int userId = 2;
@@ -86,10 +86,8 @@ public class CategoryService {
         if (categoryRequest.getLoggedMinutes() != null) {
             categoryEntity.setLoggedMinutes(categoryRequest.getLoggedMinutes());
         }
-        if(categoryRequest.getDeadline() != null) {
-            categoryEntity.setDeadline(categoryRequest.getDeadline());
-        }
-        if(categoryRequest.getStatus() != null) {
+        categoryEntity.setDeadline(categoryRequest.getDeadline());
+        if (categoryRequest.getStatus() != null) {
             categoryEntity.setStatus(categoryRequest.getStatus());
         }
 
