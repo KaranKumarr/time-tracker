@@ -17,6 +17,7 @@ public class Category {
     private Long id;
 
     private String name;
+    @Column(length = 1000)
     private String description = "";
     private Integer goalHours = 0;
     private Integer loggedMinutes = 0;
