@@ -1,7 +1,5 @@
 package org.karankumarr.timetracker.timelog.dto;
-
 import lombok.Getter;
-
 import java.time.LocalDateTime;
 
 @Getter

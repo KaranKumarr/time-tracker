@@ -19,7 +19,7 @@ public class Category {
     private String name;
     private String description = "";
     private Integer goalHours = 0;
-    private Integer loggedHours = 0;
+    private Integer loggedMinutes = 0;
 
     private LocalDateTime createdAt;
 
@@ -31,4 +31,8 @@ public class Category {
     public void onCreate() {
         this.createdAt = LocalDateTime.now();
     }
+
+    public LocalDateTime deadline;
+
+    public GoalStatus status;
 }
